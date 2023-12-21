@@ -10,6 +10,8 @@ import lombok.*;
 @Getter
 @Setter
 @Entity
+@Builder
+@AllArgsConstructor
 @Table(name = "substances")
 public class Substance implements BaseEntity<Long> {
 
@@ -20,7 +22,7 @@ public class Substance implements BaseEntity<Long> {
     private Long id;
 
     @Basic
-    @Column(name = "name", nullable = false, length = 50)
+    @Column(name = "name", unique = true, nullable = false, length = 50)
     private String name;
 
     @Basic

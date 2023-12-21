@@ -7,6 +7,11 @@ spring:
       resourceserver:
         jwt:
           issuer-uri: http://localhost:9000
+
+    #feign:
+  #oauth2:
+    #enabled: true
+    #clientRegistrationId: spring
 logging:
   level:
     org.springframework.security: trace

@@ -15,6 +15,7 @@ import org.springframework.security.authentication.dao.DaoAuthenticationProvider
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.core.userdetails.*;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.oauth2.core.AuthorizationGrantType;
@@ -85,20 +86,21 @@ public class AuthorizationServerConfig {
                 .scope("clients")
                 .clientSettings(ClientSettings.builder().requireAuthorizationConsent(false).build())
                 .build();
-       /* RegisteredClient registeredClient2 = RegisteredClient.withId("test-client-id")
-                .clientName("Test Client")
-                .clientId("test-client")
-                .clientSecret("{noop}test-client")
-                .redirectUri("http://localhost:5000/code")
-                .redirectUri("http://localhost:9000/authorized")
+        RegisteredClient registeredClient2 = RegisteredClient.withId(UUID.randomUUID().toString())
+                .clientId("feign")
+                .clientSecret(passwordEncoder.encode("secret"))
                 .clientAuthenticationMethod(ClientAuthenticationMethod.CLIENT_SECRET_BASIC)
                 .authorizationGrantType(AuthorizationGrantType.CLIENT_CREDENTIALS)
                 .authorizationGrantType(AuthorizationGrantType.AUTHORIZATION_CODE)
                 .authorizationGrantType(AuthorizationGrantType.REFRESH_TOKEN)
-                .scope("resource.read")
-                .build();*/
+                .redirectUri("http://localhost:8090")
+                .scope(OidcScopes.OPENID)
+                .scope(OidcScopes.PROFILE)
+                .scope("clients")
+                .clientSettings(ClientSettings.builder().requireAuthorizationConsent(false).build())
+                .build();
 
-        return new InMemoryRegisteredClientRepository(registeredClient/*, registeredClient2*/);
+        return new InMemoryRegisteredClientRepository(registeredClient, registeredClient2);
     }
 
 
@@ -146,6 +148,7 @@ public class AuthorizationServerConfig {
                 .authorizeHttpRequests((authorize) -> authorize
                         .anyRequest().permitAll()
                 )
+                .csrf(AbstractHttpConfigurer::disable)
                 // Form login handles the redirect to the login page from the
                 // authorization server filter chain
                 .formLogin(Customizer.withDefaults());

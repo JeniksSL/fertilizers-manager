@@ -11,4 +11,8 @@ public interface SubstanceService {
     Page<Substance> getAllByCriteria(String criteria, Integer page, Integer size);
 
     Optional<Substance> getById(Long id);
+
+    Optional<Substance> getByName(String name);
+
+    Substance create(Substance substance);
 }

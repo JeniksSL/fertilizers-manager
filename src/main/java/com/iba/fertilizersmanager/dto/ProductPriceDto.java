@@ -1,4 +1,4 @@
-package com.iba.calcservice.dto;
+package com.iba.fertilizersmanager.dto;
 
 
 

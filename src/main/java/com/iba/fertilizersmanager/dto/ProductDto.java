@@ -1,10 +1,11 @@
-package com.iba.fertilizer_service.dto;
+package com.iba.fertilizersmanager.dto;
 
 
 import com.iba.fertilizersmanager.dto.SubstanceCompact;
 import com.iba.fertilizersmanager.dto.core.BaseDto;
 import lombok.*;
 
+import java.math.BigDecimal;
 import java.util.Set;
 
 
@@ -26,6 +27,8 @@ public class ProductDto extends BaseDto {
     private String image;
 
     private Boolean isCommon;
+
+    private BigDecimal price;
 
     private Set<SubstanceCompact> substanceSet;
 

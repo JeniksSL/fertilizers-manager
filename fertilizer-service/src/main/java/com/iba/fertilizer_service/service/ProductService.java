@@ -15,9 +15,9 @@ public interface ProductService {
 
     Optional<Product> getByIdAndUserIdOrCommon(Long productId, Long currentUserId);
 
-    Product createForUser(Product toEntity, Long currentUserId);
+    Product createForUser(Product product, Long currentUserId);
 
-    Product updateForUser(Product toEntity, Long productId, Long userId);
+    Product updateForUser(Product product, Long productId, Long userId);
 
     void deleteById(Long productId);
 

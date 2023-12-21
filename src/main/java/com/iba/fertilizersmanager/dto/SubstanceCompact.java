@@ -12,7 +12,6 @@ import java.math.BigDecimal;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-@EqualsAndHashCode
 public class SubstanceCompact extends CompactDto {
     private Long id;
     private BigDecimal content;

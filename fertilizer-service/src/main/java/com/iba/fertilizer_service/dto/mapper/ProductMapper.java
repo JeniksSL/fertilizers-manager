@@ -1,9 +1,9 @@
 package com.iba.fertilizer_service.dto.mapper;
 
 import com.iba.fertilizer_service.domain.Product;
-import com.iba.fertilizer_service.dto.ProductDto;
+import com.iba.fertilizersmanager.dto.ProductDto;
 import com.iba.fertilizer_service.service.SubstanceService;
-import com.iba.fertilizersmanager.dto.ProductCompositionDto;
+import com.iba.fertilizersmanager.dto.ProductCompactDto;
 import com.iba.fertilizersmanager.dto.SubstanceCompact;
 import com.iba.fertilizersmanager.dto.core.mapper.AbstractDoubleToDtoMapper;
 import jakarta.annotation.PostConstruct;
@@ -15,10 +15,10 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Component
-public class ProductMapper extends AbstractDoubleToDtoMapper<Product, ProductDto, ProductCompositionDto> {
+public class ProductMapper extends AbstractDoubleToDtoMapper<Product, ProductDto, ProductCompactDto> {
 
     public ProductMapper(SubstanceService substanceService,  ModelMapper modelMapper) {
-        super(Product.class, ProductDto.class, ProductCompositionDto.class, modelMapper);
+        super(Product.class, ProductDto.class, ProductCompactDto.class, modelMapper);
         this.substanceService = substanceService;
     }
 
@@ -33,8 +33,8 @@ public class ProductMapper extends AbstractDoubleToDtoMapper<Product, ProductDto
         mapper.createTypeMap(ProductDto.class, Product.class)
                 .addMappings(m -> m.skip(Product::setSubstanceMap))
                 .setPostConverter(toEntityConverter());
-        mapper.createTypeMap(Product.class, ProductCompositionDto.class)
-                .addMappings(m -> m.skip(ProductCompositionDto::setSubstanceSet))
+        mapper.createTypeMap(Product.class, ProductCompactDto.class)
+                .addMappings(m -> m.skip(ProductCompactDto::setSubstanceSet))
                 .setPostConverter(toCompactDtoConverter());
     }
 
@@ -59,7 +59,7 @@ public class ProductMapper extends AbstractDoubleToDtoMapper<Product, ProductDto
     }
 
     @Override
-    protected void mapSpecificFields(Product source, ProductCompositionDto destination) {
+    protected void mapSpecificFields(Product source, ProductCompactDto destination) {
         destination.setSubstanceSet(
                 Optional.ofNullable(source.getSubstanceMap()).orElse(Collections.emptyMap())
                         .entrySet().stream()

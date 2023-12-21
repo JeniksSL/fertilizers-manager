@@ -17,6 +17,8 @@ import java.util.Map;
 @Getter
 @Setter
 @Entity
+@Builder
+@AllArgsConstructor
 @Table(name = "products")
 public class Product implements BaseEntity<Long> {
 

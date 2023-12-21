@@ -2,11 +2,10 @@ package com.iba.fertilizer_service.controller;
 
 
 import com.iba.fertilizer_service.dto.ProductCriteriaDTO;
-import com.iba.fertilizer_service.dto.ProductDto;
+import com.iba.fertilizersmanager.dto.ProductDto;
 import com.iba.fertilizer_service.facade.ProductFacade;
 
-import com.iba.fertilizersmanager.dto.PageDto;
-import com.iba.fertilizersmanager.dto.ProductCompositionDto;
+import com.iba.fertilizersmanager.dto.*;
 import com.iba.fertilizersmanager.utils.ControllerUtil;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -14,7 +13,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
+import java.math.BigDecimal;
 
 
 @RestController
@@ -31,9 +30,13 @@ public class ProductController {
                                          ProductCriteriaDTO criteria) {
         return productFacade.getAllByCriteria(criteria, page, size);
     }
-    @GetMapping("/compositions")
-    List<ProductCompositionDto> getAllCompositionsById(List<Long> productIds){
-        return List.of(new ProductCompositionDto(1L), new ProductCompositionDto(2L)); //productFacade.getAllCompositionsById(productIds);
+    @PostMapping("/resolve")
+    CalculationResponseDto resolveCase(CalculationRequestDto calculationRequest){
+        return productFacade.resolveCase(calculationRequest);
+    }
+    @GetMapping("/resolve-test")
+    CalculationResponseDto resolveCase(){
+        return productFacade.resolveCase();
     }
 
     @GetMapping("/{id}")

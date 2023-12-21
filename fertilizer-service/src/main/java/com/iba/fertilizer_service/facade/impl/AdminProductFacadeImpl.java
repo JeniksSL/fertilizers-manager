@@ -2,7 +2,7 @@ package com.iba.fertilizer_service.facade.impl;
 
 import com.iba.fertilizer_service.domain.Product;
 import com.iba.fertilizer_service.dto.ProductCriteriaDTO;
-import com.iba.fertilizer_service.dto.ProductDto;
+import com.iba.fertilizersmanager.dto.ProductDto;
 
 import com.iba.fertilizer_service.facade.AdminProductFacade;
 import com.iba.fertilizer_service.service.AdminProductService;

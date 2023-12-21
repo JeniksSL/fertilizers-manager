@@ -1,15 +1,14 @@
 package com.iba.calcservice.controller;
 
 
-import com.iba.calcservice.client.ProductClient;
-import com.iba.calcservice.dto.CalculationRequestDto;
-import com.iba.calcservice.dto.CalculationResponseDto;
+
+import com.iba.fertilizersmanager.dto.CalculationRequestDto;
+import com.iba.fertilizersmanager.dto.CalculationResponseDto;
 import com.iba.calcservice.facade.CalcFacade;
-import com.iba.fertilizersmanager.dto.ProductCompositionDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
+
 
 
 @RestController
@@ -18,7 +17,6 @@ import java.util.List;
 public class CalcController {
 
     private final CalcFacade calcFacade;
-    private final ProductClient productClient;
 
 
 
@@ -27,12 +25,5 @@ public class CalcController {
 
         return calcFacade.calculate(calculationRequestDto);
     }
-
-    @GetMapping
-    List<ProductCompositionDto> getProductsComposition(){
-        return productClient.getProductsComposition(List.of(1L, 2L));
-    }
-
-
 
 }

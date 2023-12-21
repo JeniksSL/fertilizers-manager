@@ -2,12 +2,8 @@ package com.iba.fertilizer_service.facade;
 
 
 import com.iba.fertilizer_service.dto.ProductCriteriaDTO;
-import com.iba.fertilizer_service.dto.ProductDto;
-import com.iba.fertilizersmanager.dto.PageDto;
-import com.iba.fertilizersmanager.dto.ProductCompositionDto;
-
-
-import java.util.List;
+import com.iba.fertilizersmanager.dto.ProductDto;
+import com.iba.fertilizersmanager.dto.*;
 
 public interface ProductFacade{
     PageDto<ProductDto> getAllByCriteria(ProductCriteriaDTO criteria, Integer page, Integer size);
@@ -19,5 +15,8 @@ public interface ProductFacade{
     ProductDto update(ProductDto productDto, Long productId);
 
     void deleteById(Long productId);
-    List<ProductCompositionDto> getAllCompositionsById(List<Long> productIds);
+
+    CalculationResponseDto resolveCase(CalculationRequestDto calculationRequest);
+
+    CalculationResponseDto resolveCase();
 }
