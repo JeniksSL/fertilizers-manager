@@ -20,10 +20,10 @@ spring:
           filters:
               - TokenRelay=
               - RemoveRequestHeader=Cookie
-        - id: calc
-          uri: http://localhost:8070
+        - id: template
+          uri: http://localhost:8081
           predicates:
-                    - Path=/calculations/**
+                    - Path=/**
           filters:
                     - TokenRelay=
                     - RemoveRequestHeader=Cookie

@@ -8,6 +8,7 @@
         <module>api-gateway</module>
         <module>fertilizer-service</module>
         <module>calc-service</module>
+        <module>template-service</module>
     </modules>
     <parent>
         <groupId>org.springframework.boot</groupId>
