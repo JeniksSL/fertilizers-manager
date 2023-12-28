@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.*;
 
 
 @RestController
-@RequestMapping("/substances")
+@RequestMapping("fertilizers/substances")
 @RequiredArgsConstructor
 public class SubstanceController {
     private final SubstanceFacade substanceFacade;

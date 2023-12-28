@@ -17,7 +17,7 @@ import java.math.BigDecimal;
 
 
 @RestController
-@RequestMapping("/products")
+@RequestMapping("fertilizers/products")
 @RequiredArgsConstructor
 public class ProductController {
 

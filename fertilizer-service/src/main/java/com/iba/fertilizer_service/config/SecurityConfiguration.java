@@ -33,7 +33,7 @@ public class SecurityConfiguration {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 
-        http.authorizeHttpRequests(r->r.anyRequest().authenticated())
+        http.authorizeHttpRequests(r->r.anyRequest().permitAll())
                 .oauth2ResourceServer((resourceServer) -> resourceServer
                         .jwt(Customizer.withDefaults()))
                 .csrf(AbstractHttpConfigurer::disable)

@@ -1,6 +1,7 @@
 package com.iba.fertilizer_service.dto.mapper;
 
 import com.iba.fertilizer_service.domain.Product;
+import com.iba.fertilizer_service.dto.mapper.core.ColorConverter;
 import com.iba.fertilizersmanager.dto.ProductDto;
 import com.iba.fertilizer_service.service.SubstanceService;
 import com.iba.fertilizersmanager.dto.ProductCompactDto;
@@ -29,6 +30,7 @@ public class ProductMapper extends AbstractDoubleToDtoMapper<Product, ProductDto
     public void setupMapper() {
         mapper.createTypeMap(Product.class, ProductDto.class)
                 .addMappings(m -> m.skip(ProductDto::setSubstanceSet))
+                .addMappings(m -> m.skip(ProductDto::setColor))
                 .setPostConverter(toDtoConverter());
         mapper.createTypeMap(ProductDto.class, Product.class)
                 .addMappings(m -> m.skip(Product::setSubstanceMap))
@@ -45,6 +47,7 @@ public class ProductMapper extends AbstractDoubleToDtoMapper<Product, ProductDto
                         .entrySet().stream()
                         .map((entry)-> new SubstanceCompact(entry.getKey().getId(), entry.getValue()))
                         .collect(Collectors.toSet()));
+        destination.setColor(ColorConverter.getColorString(source.getSubstanceMap()));
     }
 
     @Override

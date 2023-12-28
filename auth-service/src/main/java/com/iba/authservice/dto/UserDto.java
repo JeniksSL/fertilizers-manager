@@ -16,13 +16,11 @@ import java.util.Set;
 @NoArgsConstructor
 public class UserDto extends BaseDto {
 
-    @NotBlank
-    @Email
+
     private String email;
 
-    private transient String password;
+    private String firstName;
 
-    @NotNull
     private Set<String> roles;
 
 

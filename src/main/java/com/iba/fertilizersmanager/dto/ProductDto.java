@@ -24,6 +24,8 @@ public class ProductDto extends BaseDto {
 
     private String fullName;
 
+    private String color;
+
     private String image;
 
     private Boolean isCommon;

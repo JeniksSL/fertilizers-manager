@@ -40,3 +40,5 @@ spring:
     hibernate:
       connection:
         provider_class: com.zaxxer.hikari.hibernate.HikariConnectionProvider
+front:
+  url: http://localhost:3000

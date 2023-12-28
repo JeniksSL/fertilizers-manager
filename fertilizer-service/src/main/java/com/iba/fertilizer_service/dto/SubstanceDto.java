@@ -20,7 +20,7 @@ public class SubstanceDto extends BaseDto {
     @NotBlank
     private String name;
     @NonNull
-    private Integer color;
+    private String color;
 
     private String description;
 
