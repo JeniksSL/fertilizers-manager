@@ -31,7 +31,7 @@ public class ProductController {
         return productFacade.getAllByCriteria(criteria, page, size);
     }
     @PostMapping("/resolve")
-    CalculationResponseDto resolveCase(CalculationRequestDto calculationRequest){
+    CalculationResponseDto resolveCase(@RequestBody CalculationRequestDto calculationRequest){
         return productFacade.resolveCase(calculationRequest);
     }
     @GetMapping("/resolve-test")

@@ -67,6 +67,7 @@ public class ProductFacadeImpl implements ProductFacade {
 
     @Override
     public CalculationResponseDto resolveCase(CalculationRequestDto calculationRequest) {
+        validateAndSupplementRequest(calculationRequest);
         return calcClient.getProductsComposition(calculationRequest);
     }
 
@@ -86,7 +87,7 @@ public class ProductFacadeImpl implements ProductFacade {
 
     @Transactional
     private void validateAndSupplementRequest(CalculationRequestDto calculationRequest) {
-        Long currentUserId = userService.getCurrentUserId();
+        Long currentUserId = 0L; //userService.getCurrentUserId();
         calculationRequest.products()
                 .forEach(productCompactDto -> {
             ProductCompactDto original = doubleMapper.toCompactFromEntity(productService.getByIdAndUser(productCompactDto.getId(), currentUserId).orElseThrow());
