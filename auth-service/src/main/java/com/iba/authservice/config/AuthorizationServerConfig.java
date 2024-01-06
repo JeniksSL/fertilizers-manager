@@ -99,8 +99,20 @@ public class AuthorizationServerConfig {
                 .scope("clients")
                 .clientSettings(ClientSettings.builder().requireAuthorizationConsent(false).build())
                 .build();
+        RegisteredClient registeredClient3 = RegisteredClient.withId(UUID.randomUUID().toString())
+                .clientId("browser-client")
+                .clientSecret(passwordEncoder.encode("secret"))
+                .clientAuthenticationMethod(ClientAuthenticationMethod.NONE)
+                .authorizationGrantType(AuthorizationGrantType.AUTHORIZATION_CODE)
+                .authorizationGrantType(AuthorizationGrantType.REFRESH_TOKEN)
+                .redirectUri("http://localhost:3000/")
+                .scope(OidcScopes.OPENID)
+                .scope(OidcScopes.PROFILE)
+                .scope("clients")
+                .clientSettings(ClientSettings.builder().requireAuthorizationConsent(false).build())
+                .build();
 
-        return new InMemoryRegisteredClientRepository(registeredClient, registeredClient2);
+        return new InMemoryRegisteredClientRepository(registeredClient, registeredClient2, registeredClient3);
     }
 
 
