@@ -5,7 +5,7 @@ package com.iba.authservice.controller;
 import com.iba.authservice.facade.SecurityFacade;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
-
+import org.springframework.web.servlet.view.RedirectView;
 
 
 @RestController("/api/v1/auth")
@@ -16,9 +16,9 @@ public class AuthController {
 
 
 
-  /* @PostMapping({"/login"})
-    public void login(@RequestBody LoginRequest authRequest) {
-
+   /*@GetMapping({"/login"})
+    public RedirectView login() {
+       return new RedirectView("http://localhost:3000/");
     }
 
 

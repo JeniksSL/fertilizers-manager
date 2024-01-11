@@ -36,6 +36,7 @@ public class RequestResolver {
 
 
         recursiveResolution(new LogicCase(productTreeMap), substanceWeights, calculationRequestDto, calculationResponseDto);
+        calculationResponseDto.setCases(calculationResponseDto.getCases().stream().sorted(Comparator.comparing(CalculationCaseDto::totalPrice)).toList());
         return calculationResponseDto;
     }
 

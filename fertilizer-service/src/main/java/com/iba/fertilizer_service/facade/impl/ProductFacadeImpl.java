@@ -87,10 +87,10 @@ public class ProductFacadeImpl implements ProductFacade {
 
     @Transactional
     private void validateAndSupplementRequest(CalculationRequestDto calculationRequest) {
-        Long currentUserId = 0L; //userService.getCurrentUserId();
+        Long currentUserId = userService.getCurrentUserId();
         calculationRequest.products()
                 .forEach(productCompactDto -> {
-            ProductCompactDto original = doubleMapper.toCompactFromEntity(productService.getByIdAndUser(productCompactDto.getId(), currentUserId).orElseThrow());
+            ProductCompactDto original = doubleMapper.toCompactFromEntity(productService.getByIdAndUserIdOrCommon(productCompactDto.getId(), currentUserId).orElseThrow());
             productCompactDto.setSubstanceSet(original.getSubstanceSet());
         });
     }

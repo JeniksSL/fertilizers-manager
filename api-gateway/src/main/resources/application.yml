@@ -5,49 +5,64 @@ server:
 spring:
   cloud:
     gateway:
+      default-filters:
+        - DedupeResponseHeader=Access-Control-Allow-Origin Access-Control-Allow-Credentials, RETAIN_UNIQUE
+      globalcors:
+        corsConfigurations:
+          '[/**]':
+            allowedOrigins: "http://localhost:3000"
+            allowedHeaders: "*"
+            allowedMethods: "*"
+            allowCredentials: true
       routes:
-        - id: authorisation
-          uri: http://localhost:9000
-          predicates:
-            - Path=/oauth2/**
+        #- id: auth
+          #uri: http://localhost:9000
+          #predicates:
+           # - Path=/oauth2/**
+          #filters:
+           # - TokenRelay=
+       # - id: auth2
+         # uri: http://localhost:9000
+         # predicates:
+           #   - Path=/userinfo
+          #filters:
+             # - TokenRelay=
         - id: users
           uri: http://localhost:9000
           predicates:
             - Path=/auth-server/**
-          filters:
-            - TokenRelay=
-            - RemoveRequestHeader=Cookie
+          #filters:
+           # - TokenRelay=
+           # - RemoveRequestHeader=Cookie
         - id: fertilizers
           uri: http://localhost:8090
           predicates:
-              - Path=/products/**
-          filters:
-              - TokenRelay=
-              - RemoveRequestHeader=Cookie
-        - id: template
-          uri: http://localhost:8081
-          predicates:
-                    - Path=/**
-          filters:
-                    - TokenRelay=
-                    - RemoveRequestHeader=Cookie
-  security:
-    oauth2:
-      client:
-        registration:
-          gateway:
-            provider: spring
-            client-id: gateway
-            client-secret: secret
-            authorization-grant-type:
-            - "authorization_code"
-            - "refresh_token"
-            redirect-uri: "http://localhost:8080/login/oauth2/code/gateway"
-            scope: openid,clients,profile
+              - Path=/fertilizers/**
+         # filters:
+              #- TokenRelay=
+             # - RemoveRequestHeader=Cookie
 
-        provider:
-          spring:
-            issuer-uri: http://localhost:9000
+  #security:
+   # oauth2:
+      #resourceserver:
+       # jwt:
+         # issuer-uri: http://localhost:9000
+    #oauth2:
+      #client:
+        #registration:
+          #gateway:
+            #provider: spring
+            #client-id: gateway
+           # client-secret: secret
+            #authorization-grant-type:
+            #- "authorization_code"
+            #- "refresh_token"
+            #redirect-uri: "http://localhost:8080/login/oauth2/code/gateway"
+            #scope: openid,clients,profile
+
+       # provider:
+          #spring:
+            #issuer-uri: http://localhost:9000
 logging:
   level:
     org.springframework.security: trace

@@ -110,6 +110,13 @@ public class AuthorizationServerConfig {
                 .scope(OidcScopes.PROFILE)
                 .scope("clients")
                 .clientSettings(ClientSettings.builder().requireAuthorizationConsent(false).build())
+                .tokenSettings(TokenSettings.builder()
+                        .accessTokenFormat(OAuth2TokenFormat.SELF_CONTAINED)
+                        .accessTokenTimeToLive(Duration.of(120, ChronoUnit.MINUTES))
+                        .refreshTokenTimeToLive(Duration.of(120, ChronoUnit.MINUTES))
+                        .reuseRefreshTokens(false)
+                        .authorizationCodeTimeToLive(Duration.of(30, ChronoUnit.SECONDS))
+                        .build())
                 .build();
 
         return new InMemoryRegisteredClientRepository(registeredClient, registeredClient2, registeredClient3);
@@ -157,13 +164,14 @@ public class AuthorizationServerConfig {
     @Order(2)
     SecurityFilterChain defaultSecurityFilterChain(HttpSecurity http) throws Exception {
         http
-                .authorizeHttpRequests((authorize) -> authorize
-                        .anyRequest().permitAll()
+                .authorizeHttpRequests((authorize) -> authorize.requestMatchers("/auth-server/users").permitAll()
+                        .anyRequest().authenticated()
                 )
                 .csrf(AbstractHttpConfigurer::disable)
                 // Form login handles the redirect to the login page from the
                 // authorization server filter chain
                 .formLogin(Customizer.withDefaults());
+        //.formLogin(l->l.loginPage("/login"));
         return http.build();
     }
 
