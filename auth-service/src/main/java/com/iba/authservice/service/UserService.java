@@ -17,4 +17,8 @@ public interface UserService {
     void deleteUser(User user, String oldPassword);
 
     void confirmUserByCode(UUID code);
+
+    void attachImageToUser(Long id, String imageName);
+
+    String getImageLocation(Long id);
 }

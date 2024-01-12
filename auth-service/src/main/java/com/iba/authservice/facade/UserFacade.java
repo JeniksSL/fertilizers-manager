@@ -21,4 +21,7 @@ public interface UserFacade {
     void deleteCurrent(String oldPassword);
 
     void confirmUserByCode(UUID code);
+    void attachImageToUser(Long id, String imageName);
+
+    String getImageLocation(Long id);
 }

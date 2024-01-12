@@ -60,4 +60,15 @@ public class UserController {
     public void delete(String oldPassword) {
         userFacade.deleteCurrent(oldPassword);
     }
+
+
+    @PostMapping("/image/{id}")
+    public void attachImageToUser(@PathVariable Long id, String imageName) {
+        userFacade.attachImageToUser(id, imageName);
+    }
+
+    @GetMapping("/image/{id}")
+    public String getImageLocation(@PathVariable Long id){
+        return userFacade.getImageLocation(id);
+    }
 }

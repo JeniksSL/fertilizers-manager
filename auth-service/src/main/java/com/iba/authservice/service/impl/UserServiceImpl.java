@@ -108,6 +108,19 @@ public class UserServiceImpl implements UserService {
         userCodeRepository.delete(userCode);
     }
 
+    @Override
+    public void attachImageToUser(Long id, String imageName) {
+        User user = userRepository.findById(id).orElseThrow();
+        user.setImage(imageName);
+        userRepository.save(user);
+    }
+
+    @Override
+    public String getImageLocation(Long id) {
+        User user = userRepository.findById(id).orElseThrow();
+        return user.getImage();
+    }
+
     private void activateUser(User user) {
         user.setIsEnabled(true);
         user.setIsEmailConfirmed(true);

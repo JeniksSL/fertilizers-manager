@@ -36,6 +36,9 @@ public class User extends TrackingEntity implements DomainClass, BaseEntity<Long
     @Column(name = "last_name")
     private String lastName;
 
+    @Column(name = "ava_image")
+    private String image;
+
     @Column(name = "is_email_confirmed")
     private Boolean isEmailConfirmed;
 

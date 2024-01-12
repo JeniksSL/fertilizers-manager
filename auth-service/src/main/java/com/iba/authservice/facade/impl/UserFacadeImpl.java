@@ -50,4 +50,14 @@ public class UserFacadeImpl implements UserFacade {
     public void confirmUserByCode(UUID code) {
         userService.confirmUserByCode(code);
     }
+
+    @Override
+    public void attachImageToUser(Long id, String imageName) {
+        userService.attachImageToUser(id, imageName);
+    }
+
+    @Override
+    public String getImageLocation(Long id) {
+        return userService.getImageLocation(id);
+    }
 }

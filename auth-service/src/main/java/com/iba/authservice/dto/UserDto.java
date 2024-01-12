@@ -23,5 +23,6 @@ public class UserDto extends BaseDto {
 
     private Set<String> roles;
 
+    private String image;
 
 }

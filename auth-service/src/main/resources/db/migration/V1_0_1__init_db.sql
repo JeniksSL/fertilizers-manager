@@ -32,6 +32,7 @@ CREATE TABLE users
     password            VARCHAR(255),
     first_name          VARCHAR(255),
     last_name           VARCHAR(255),
+    ava_image           VARCHAR(1000),
     is_email_confirmed  BOOLEAN,
     is_enabled          BOOLEAN,
     CONSTRAINT pk_users PRIMARY KEY (user_id)

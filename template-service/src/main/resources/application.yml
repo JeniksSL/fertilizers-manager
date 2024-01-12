@@ -7,11 +7,40 @@ spring:
       resourceserver:
         jwt:
           issuer-uri: http://localhost:9000
+      client:
+        registration:
+          feign:
+            provider: feign
+            client-id: feign-image
+            client-secret: secret
+            authorization-grant-type: client_credentials
+            redirect-uri: "http://localhost:8081"
+            scope: openid,clients,profile
+        provider:
+          feign:
+            #token-uri: http://localhost:9000/oauth2/access-token
+            issuer-uri: http://localhost:9000
+  cloud:
+    openfeign:
+      oauth2:
+        enabled: true
+        clientRegistrationId: feign
+      httpclient:
+        follow-redirects: true
+
 
     #feign:
   #oauth2:
     #enabled: true
     #clientRegistrationId: spring
+
+  servlet:
+    multipart:
+      max-file-size: 1024KB
+      max-request-size: 1024KB
 logging:
   level:
     org.springframework.security: trace
+front:
+  url: http://localhost:3000
+

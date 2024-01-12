@@ -38,6 +38,10 @@ spring:
           uri: http://localhost:8090
           predicates:
               - Path=/fertilizers/**
+        - id: images
+          uri: http://localhost:8081
+          predicates:
+            - Path=/file-server/**
          # filters:
               #- TokenRelay=
              # - RemoveRequestHeader=Cookie

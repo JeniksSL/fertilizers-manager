@@ -99,6 +99,19 @@ public class AuthorizationServerConfig {
                 .scope("clients")
                 .clientSettings(ClientSettings.builder().requireAuthorizationConsent(false).build())
                 .build();
+        RegisteredClient registeredClient4 = RegisteredClient.withId(UUID.randomUUID().toString())
+                .clientId("feign-image")
+                .clientSecret(passwordEncoder.encode("secret"))
+                .clientAuthenticationMethod(ClientAuthenticationMethod.CLIENT_SECRET_BASIC)
+                .authorizationGrantType(AuthorizationGrantType.CLIENT_CREDENTIALS)
+                .authorizationGrantType(AuthorizationGrantType.AUTHORIZATION_CODE)
+                .authorizationGrantType(AuthorizationGrantType.REFRESH_TOKEN)
+                .redirectUri("http://localhost:8081")
+                .scope(OidcScopes.OPENID)
+                .scope(OidcScopes.PROFILE)
+                .scope("clients")
+                .clientSettings(ClientSettings.builder().requireAuthorizationConsent(false).build())
+                .build();
         RegisteredClient registeredClient3 = RegisteredClient.withId(UUID.randomUUID().toString())
                 .clientId("browser-client")
                 .clientSecret(passwordEncoder.encode("secret"))
@@ -119,7 +132,7 @@ public class AuthorizationServerConfig {
                         .build())
                 .build();
 
-        return new InMemoryRegisteredClientRepository(registeredClient, registeredClient2, registeredClient3);
+        return new InMemoryRegisteredClientRepository(registeredClient, registeredClient2, registeredClient3, registeredClient4);
     }
 
 
