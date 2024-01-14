@@ -7,7 +7,9 @@ import com.iba.authservice.facade.UserFacade;
 import com.iba.fertilizersmanager.utils.ControllerUtil;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.context.annotation.Scope;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
@@ -20,6 +22,7 @@ public class UserController {
     private final UserFacade userFacade;
 
 
+    @PreAuthorize("#oauth2.hasScope('clients')")
     @GetMapping
     public UserDto getCurrentUser() {
         return userFacade.getCurrentUser();
@@ -61,9 +64,9 @@ public class UserController {
         userFacade.deleteCurrent(oldPassword);
     }
 
-
+    @PreAuthorize("#oauth2.hasScope('clients')")
     @PostMapping("/image/{id}")
-    public void attachImageToUser(@PathVariable Long id, String imageName) {
+    public void attachImageToUser(@PathVariable Long id,@RequestBody String imageName) {
         userFacade.attachImageToUser(id, imageName);
     }
 

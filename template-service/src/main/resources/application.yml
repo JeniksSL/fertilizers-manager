@@ -9,24 +9,49 @@ spring:
           issuer-uri: http://localhost:9000
       client:
         registration:
-          feign:
-            provider: feign
+          feign-image:
+            provider: feign-image
             client-id: feign-image
             client-secret: secret
             authorization-grant-type: client_credentials
             redirect-uri: "http://localhost:8081"
             scope: openid,clients,profile
         provider:
-          feign:
+          feign-image:
             #token-uri: http://localhost:9000/oauth2/access-token
             issuer-uri: http://localhost:9000
   cloud:
     openfeign:
       oauth2:
         enabled: true
-        clientRegistrationId: feign
-      httpclient:
-        follow-redirects: true
+        clientRegistrationId: feign-image
+      client:
+        config:
+          auth-service:
+            url: http://localhost:9000
+            connectTimeout: 5000
+            readTimeout: 5000
+            loggerLevel: full
+            #errorDecoder: com.iba.template_service.client.FeignCustomErrorDecoder
+            follow-redirects: false
+            #retryer: com.iba.template_service.client.NaiveRetryer
+            #defaultQueryParameters:
+            #    query: queryValue
+            #defaultRequestHeaders:
+             #   header: headerValue
+            #requestInterceptors:
+             #   - com.example.FooRequestInterceptor
+             #   - com.example.BarRequestInterceptor
+            #responseInterceptor: com.example.BazResponseInterceptor
+            #dismiss404: false
+            #encoder: com.example.SimpleEncoder
+            #decoder: com.example.SimpleDecoder
+            #contract: com.example.SimpleContract
+           # capabilities:
+            #    - com.example.FooCapability
+            #    - com.example.BarCapability
+            #queryMapEncoder: com.example.SimpleQueryMapEncoder
+           # micrometer.enabled: false
 
 
     #feign:

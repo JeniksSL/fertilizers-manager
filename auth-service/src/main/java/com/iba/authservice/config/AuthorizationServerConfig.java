@@ -121,7 +121,6 @@ public class AuthorizationServerConfig {
                 .redirectUri("http://localhost:3000/")
                 .scope(OidcScopes.OPENID)
                 .scope(OidcScopes.PROFILE)
-                .scope("clients")
                 .clientSettings(ClientSettings.builder().requireAuthorizationConsent(false).build())
                 .tokenSettings(TokenSettings.builder()
                         .accessTokenFormat(OAuth2TokenFormat.SELF_CONTAINED)
@@ -177,7 +176,9 @@ public class AuthorizationServerConfig {
     @Order(2)
     SecurityFilterChain defaultSecurityFilterChain(HttpSecurity http) throws Exception {
         http
-                .authorizeHttpRequests((authorize) -> authorize.requestMatchers("/auth-server/users").permitAll()
+                .authorizeHttpRequests((authorize) ->
+                        authorize.requestMatchers("/auth-server/users/**")
+                                .permitAll()
                         .anyRequest().authenticated()
                 )
                 .csrf(AbstractHttpConfigurer::disable)

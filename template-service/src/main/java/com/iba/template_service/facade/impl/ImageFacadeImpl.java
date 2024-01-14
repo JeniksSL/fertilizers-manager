@@ -1,6 +1,7 @@
 package com.iba.template_service.facade.impl;
 
 import com.iba.template_service.client.AuthServiceClient;
+import com.iba.template_service.client.Response302Exception;
 import com.iba.template_service.facade.ImageFacade;
 import com.iba.template_service.service.ImageService;
 import com.iba.template_service.service.UserService;
@@ -28,7 +29,12 @@ public class ImageFacadeImpl implements ImageFacade {
         UUID random = UUID.randomUUID();
         String fileName = random.toString();
         String location = imageService.save(file,fileName);
-        authServiceClient.attachImageToUser(userService.getCurrentUserId(), location);
+        try{
+            authServiceClient.attachImageToUser(userService.getCurrentUserId(), location);
+        } catch (Response302Exception ex) {
+
+        }
+
     }
 
     @Override
