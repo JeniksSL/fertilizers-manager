@@ -17,7 +17,7 @@ import java.util.UUID;
 @Setter
 
 @NoArgsConstructor
-public class Session extends Belong2User implements DomainClass {
+public class Session extends Belong2User  {
     @Builder
     public Session(Long userId, UUID id, String refreshToken, String accessToken, String fingerPrint, Set<RoleType> roles) {
         super(userId);

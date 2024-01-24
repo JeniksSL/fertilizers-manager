@@ -34,10 +34,6 @@ public class ProductController {
     CalculationResponseDto resolveCase(@RequestBody CalculationRequestDto calculationRequest){
         return productFacade.resolveCase(calculationRequest);
     }
-    @GetMapping("/resolve-test")
-    CalculationResponseDto resolveCase(){
-        return productFacade.resolveCase();
-    }
 
     @GetMapping("/{id}")
     ProductDto findById(@PathVariable("id") Long productId) {

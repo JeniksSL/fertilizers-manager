@@ -10,24 +10,24 @@ import java.util.*;
 @Component
 public class ProductSpecificationBuilderImpl implements ProductSpecificationBuilder {
 
-    public static Specification<Product> getByNameLike(String name) {
+    private Specification<Product> getByNameLike(String name) {
         if (name==null) return (root, criteriaQuery, criteriaBuilder) -> criteriaBuilder.conjunction();
         return (root, criteriaQuery, criteriaBuilder) -> criteriaBuilder.like(root.get("name"), "%" + name + "%");
     }
 
-    public static Specification<Product> getByDescriptionLike(String description) {
+    private Specification<Product> getByDescriptionLike(String description) {
         if (description==null) return (root, criteriaQuery, criteriaBuilder) -> criteriaBuilder.conjunction();
         return (root, criteriaQuery, criteriaBuilder) -> criteriaBuilder.like(root.get("name"), "%" + description+ "%");
     }
 
-    public static Specification<Product> getAllBySubstancesEqual(Set<Long> substanceIds) {
+    private Specification<Product> getAllBySubstancesEqual(Set<Long> substanceIds) {
         if (substanceIds==null||substanceIds.size()==0)
             return (root, criteriaQuery, criteriaBuilder) -> criteriaBuilder.conjunction();
         return (root, query, criteriaBuilder) -> criteriaBuilder
                 .and(root.joinMap("substanceMap").key().get("id").in(substanceIds));
     }
 
-    public static Specification<Product> getByUser(Long userId, Boolean isCommon) {
+    private Specification<Product> getByUser(Long userId, Boolean isCommon) {
         if (isCommon!=null&&isCommon) return (root, criteriaQuery, criteriaBuilder) -> criteriaBuilder
                 .or(criteriaBuilder.equal(root.get("userId"), userId ), criteriaBuilder.isTrue(root.get("isCommon")));
         return (root, criteriaQuery, criteriaBuilder) -> criteriaBuilder.equal(root.get("userId"), userId);

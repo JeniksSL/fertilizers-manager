@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.Optional;
 
-@Service
+
 public interface AdminProductService {
 
     Page<Product> getAllByCriteria(ProductCriteriaDTO criteria, Integer page, Integer size);
