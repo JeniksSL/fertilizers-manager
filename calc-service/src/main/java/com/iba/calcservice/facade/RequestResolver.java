@@ -7,14 +7,16 @@ import com.iba.fertilizersmanager.dto.*;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 public class RequestResolver {
 
     int maxDifference = 5;
     int maxLength = 50;
-    int minRate = 3;
+    int minRate = 5;
 
 
 
@@ -79,7 +81,7 @@ public class RequestResolver {
                 NativeFinder.nativeSolve(startCase, substanceWeights, false);
             }
             if (isValid(startCase, substanceWeights)) {
-                if (isCleanCase(startCase))  addCaseToResponse(startCase ,calculationRequestDto, calculationResponseDto);
+                if (!checkIfExists(calculationResponseDto, startCase)&isCleanCase(startCase)) addCaseToResponse(startCase ,calculationRequestDto, calculationResponseDto);
                 cases.addAll(getNextCases(startCase));
             }
             cases.forEach(logicCase -> recursiveResolution(logicCase, substanceWeights, calculationRequestDto,calculationResponseDto));
@@ -99,7 +101,7 @@ public class RequestResolver {
                             .orElse(null)
                 ).filter(Objects::nonNull)
                 .toList();
-        BigDecimal totalPrice = productCompactDtos.stream().map(pcd->pcd.getPrice().multiply(pcd.getRate())).reduce(BigDecimal::add).orElse(BigDecimal.ZERO);
+        BigDecimal totalPrice = productCompactDtos.stream().map(pcd->pcd.getPrice().multiply(pcd.getRate()).divide(new BigDecimal(1000), RoundingMode.CEILING)).reduce(BigDecimal::add).orElse(BigDecimal.ZERO);
         CalculationCaseDto calculationCaseDto = CalculationCaseDto
                 .builder()
                 .totalPrice(totalPrice)
@@ -122,7 +124,7 @@ public class RequestResolver {
 
         TreeSet<LogicCase> cases = new TreeSet<>();
         for (LogicProduct lp : startCase.getProductMap().values()) {
-            if (lp.getRate() > 0) {
+            if (lp.getRate() >= minRate) {
                 TreeMap<Long,LogicProduct> productTreeMap = new TreeMap<>(startCase.getProductMap());
                 productTreeMap.remove(lp.getId());
                 productTreeMap.replaceAll((k, v)->getCopy(v));
@@ -135,6 +137,15 @@ public class RequestResolver {
 
     private LogicProduct getCopy(LogicProduct logicProduct){
         return new LogicProduct(logicProduct.getId(), logicProduct.getPrice(), logicProduct.getRate(), logicProduct.getSubstanceMap());
+    }
+
+    private boolean checkIfExists(CalculationResponseDto calculationResponseDto, LogicCase logicCase){
+        return calculationResponseDto.getCases().stream().anyMatch(it->checkIsSame(it, logicCase));
+    }
+    private boolean checkIsSame(CalculationCaseDto calculationCaseDto,LogicCase logicCase){
+        Set<Long> inCaseDto = calculationCaseDto.products().stream().filter(it->it.getRate().doubleValue()>0).map(ProductCompactDto::getId).collect(Collectors.toSet());
+        Set<Long> inCase = logicCase.getProductMap().values().stream().filter(it->it.getRate()>0).map(LogicProduct::getId).collect(Collectors.toSet());
+        return inCaseDto.equals(inCase);
     }
 
 
