@@ -80,6 +80,7 @@ public class RequestResolver {
             if (!isValid(startCase, substanceWeights)) {
                 NativeFinder.nativeSolve(startCase, substanceWeights, false);
             }
+            cleanCase(startCase);
             if (isValid(startCase, substanceWeights)) {
                 if (!checkIfExists(calculationResponseDto, startCase)&isCleanCase(startCase)) addCaseToResponse(startCase ,calculationRequestDto, calculationResponseDto);
                 cases.addAll(getNextCases(startCase));
@@ -87,6 +88,11 @@ public class RequestResolver {
             cases.forEach(logicCase -> recursiveResolution(logicCase, substanceWeights, calculationRequestDto,calculationResponseDto));
         }
     }
+
+    private void cleanCase(LogicCase startCase) {
+        startCase.getProductMap().values().stream().filter(it->it.getRate()<minRate).forEach(it->it.setRate(0));
+    }
+
     private void addCaseToResponse(LogicCase logicCase, CalculationRequestDto calculationRequestDto, CalculationResponseDto calculationResponseDto){
 
         List<SubstanceCompact> substanceCompacts = calculationRequestDto.substances().stream().map(SubstanceCompact::getId).map(id->new SubstanceCompact(id, BigDecimal.valueOf(getWeight(logicCase, id)))).toList();
@@ -97,7 +103,7 @@ public class RequestResolver {
                     Optional.ofNullable(logicCase.getProductMap().get(pcd.getId())).map(LogicProduct::getRate)
                             .filter(value->value>0)
                             .map(BigDecimal::valueOf)
-                            .map(value->new ProductCompactDto(pcd.getId(), pcd.getPrice(), value, null))
+                            .map(value->new ProductCompactDto(pcd.getId(), pcd.getPrice(), value, pcd.getSubstanceSet().stream().map(it->new SubstanceCompact(it.getId(), it.getContent().multiply(value))).collect(Collectors.toSet())))
                             .orElse(null)
                 ).filter(Objects::nonNull)
                 .toList();

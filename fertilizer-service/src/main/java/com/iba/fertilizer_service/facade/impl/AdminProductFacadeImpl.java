@@ -7,7 +7,7 @@ import com.iba.fertilizersmanager.dto.ProductDto;
 import com.iba.fertilizer_service.facade.AdminProductFacade;
 import com.iba.fertilizer_service.service.AdminProductService;
 
-import com.iba.fertilizer_service.service.impl.UserService;
+import com.iba.fertilizer_service.service.UserService;
 
 import com.iba.fertilizersmanager.DomainConst;
 import com.iba.fertilizersmanager.dto.PageDto;

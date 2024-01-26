@@ -110,7 +110,7 @@ public class DataLoader implements ApplicationRunner {
                         .isCommon(true)
                         .substanceMap(Map.of(
                                 p2o5Sub, new BigDecimal("0.21"),
-                                so3Sub, new BigDecimal("0.024")
+                                so3Sub, new BigDecimal("0.24")
                         ))
                         .build()
                 , 0L);

@@ -9,7 +9,7 @@ import com.iba.fertilizersmanager.dto.ProductDto;
 import com.iba.fertilizer_service.facade.ProductFacade;
 import com.iba.fertilizer_service.service.*;
 
-import com.iba.fertilizer_service.service.impl.UserService;
+import com.iba.fertilizer_service.service.UserService;
 
 import com.iba.fertilizersmanager.dto.*;
 import com.iba.fertilizersmanager.dto.core.mapper.DoubleToDtoMapper;
@@ -18,8 +18,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 
-import java.math.BigDecimal;
-import java.util.ArrayList;
 import java.util.List;
 
 
@@ -68,20 +66,6 @@ public class ProductFacadeImpl implements ProductFacade {
     @Override
     public CalculationResponseDto resolveCase(CalculationRequestDto calculationRequest) {
         validateAndSupplementRequest(calculationRequest);
-        return calcClient.getProductsComposition(calculationRequest);
-    }
-
-    @Override
-    public CalculationResponseDto resolveCase() {
-        Page<Product> pageDto = productService.getAllByCriteriaAndUser(new ProductCriteriaDTO(null,null,null,true), 0, 10, 0L);
-
-        CalculationRequestDto calculationRequest = CalculationRequestDto.builder()
-                .products( pageDto.get().map(doubleMapper::toCompactFromEntity).map(productCompactDto -> {
-                    productCompactDto.setPrice(BigDecimal.TEN);
-                    return productCompactDto;
-                }).toList())
-                .substances(List.of(new SubstanceCompact(1L, BigDecimal.valueOf(200)), new SubstanceCompact(2L, BigDecimal.valueOf(150))))
-                .build();
         return calcClient.getProductsComposition(calculationRequest);
     }
 

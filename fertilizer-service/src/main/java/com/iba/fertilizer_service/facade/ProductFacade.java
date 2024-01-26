@@ -18,5 +18,4 @@ public interface ProductFacade{
 
     CalculationResponseDto resolveCase(CalculationRequestDto calculationRequest);
 
-    CalculationResponseDto resolveCase();
 }

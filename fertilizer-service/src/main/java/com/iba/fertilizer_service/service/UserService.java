@@ -1,4 +1,4 @@
-package com.iba.fertilizer_service.service.impl;
+package com.iba.fertilizer_service.service;
 
 import org.springframework.security.core.GrantedAuthority;
 
