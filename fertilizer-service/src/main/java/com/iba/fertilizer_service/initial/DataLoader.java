@@ -29,7 +29,7 @@ public class DataLoader implements ApplicationRunner {
                 .orElseGet(()->substanceService.create(Substance
                         .builder()
                         .name("N")
-                        .color(16772864)
+                        .color(11787517)
                         .description("Nitrogen")
                         .build()
                 ));
@@ -37,7 +37,7 @@ public class DataLoader implements ApplicationRunner {
                 .orElseGet(()->substanceService.create(Substance
                         .builder()
                         .name("P2O5")
-                        .color(8945787)
+                        .color(12500408)
                         .description("Phosphorus oxide")
                         .build()
                 ));
@@ -45,7 +45,7 @@ public class DataLoader implements ApplicationRunner {
                 .orElseGet(()->substanceService.create(Substance
                         .builder()
                         .name("K2O")
-                        .color(8731495)
+                        .color(16738673)
                         .description("Potassium oxide")
                         .build()
                 ));
@@ -53,7 +53,7 @@ public class DataLoader implements ApplicationRunner {
                 .orElseGet(()->substanceService.create(Substance
                         .builder()
                         .name("SO3")
-                        .color(9313821)
+                        .color(155303461)
                         .description("Sulphur oxide")
                         .build()
                 ));
@@ -109,7 +109,7 @@ public class DataLoader implements ApplicationRunner {
                         .fullName("Ammonium sulfate")
                         .isCommon(true)
                         .substanceMap(Map.of(
-                                p2o5Sub, new BigDecimal("0.21"),
+                                nSub, new BigDecimal("0.21"),
                                 so3Sub, new BigDecimal("0.24")
                         ))
                         .build()
@@ -120,7 +120,7 @@ public class DataLoader implements ApplicationRunner {
                         .fullName("Ammonium Nitrate")
                         .isCommon(true)
                         .substanceMap(Map.of(
-                                p2o5Sub, new BigDecimal("0.34")
+                                nSub, new BigDecimal("0.34")
                         ))
                         .build()
                 , 0L);
