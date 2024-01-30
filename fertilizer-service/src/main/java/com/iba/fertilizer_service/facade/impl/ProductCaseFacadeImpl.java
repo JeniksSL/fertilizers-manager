@@ -42,11 +42,21 @@ public class ProductCaseFacadeImpl implements ProductCaseFacade {
         Long currentUserId = userService.getCurrentUserId();
         ProductCase productCase = doubleMapper.toEntity(productCaseDto);
         Map<Substance, BigDecimal> substanceBigDecimalMap=new HashMap<>();
-        Map<Product, BigDecimal> productBigDecimalMap=new HashMap<>();
+        Map<Product, ProductPriceRate> productBigDecimalMap=new HashMap<>();
         productCaseDto.getSubstances().forEach(it->substanceBigDecimalMap.put(substanceService.getById(it.getId()).orElseThrow(),it.getContent()));
-        productCaseDto.getProducts().forEach(it->productBigDecimalMap.put(productService.getByIdAndUserIdOrCommon(it.getId(), currentUserId).orElseThrow(),it.getRate()));
+        productCaseDto
+                .getProducts()
+                .forEach(it->productBigDecimalMap.put(
+                        productService.getByIdAndUserIdOrCommon(it.getId(), currentUserId).orElseThrow(),
+                        ProductPriceRate.builder().rate(it.getRate()).price(it.getPrice()).build()));
         productCase.setSubstanceMap(substanceBigDecimalMap);
         productCase.setProductMap(productBigDecimalMap);
         return doubleMapper.toDto(productCaseService.createForUser(productCase, currentUserId));
+    }
+
+    @Override
+    public void deleteById(Long caseId) {
+        productCaseService.getByIdAndUserId(caseId, userService.getCurrentUserId()).orElseThrow();
+        productCaseService.deleteById(caseId);
     }
 }

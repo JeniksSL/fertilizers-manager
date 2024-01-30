@@ -8,4 +8,7 @@ public interface ProductCaseFacade {
     PageDto<ProductCaseDto> findAll(Integer page, Integer size);
 
     ProductCaseDto create(ProductCaseDto productCaseDto);
+
+    void deleteById(Long caseId);
+
 }

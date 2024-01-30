@@ -53,7 +53,7 @@ public class DataLoader implements ApplicationRunner {
                 .orElseGet(()->substanceService.create(Substance
                         .builder()
                         .name("SO3")
-                        .color(155303461)
+                        .color(15530346)
                         .description("Sulphur oxide")
                         .build()
                 ));

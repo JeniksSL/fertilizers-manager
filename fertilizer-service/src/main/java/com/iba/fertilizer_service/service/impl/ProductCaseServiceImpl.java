@@ -1,19 +1,30 @@
 package com.iba.fertilizer_service.service.impl;
 
 
+import com.iba.fertilizer_service.domain.Product;
 import com.iba.fertilizer_service.domain.ProductCase;
 import com.iba.fertilizer_service.dto.ProductCaseDto;
+import com.iba.fertilizer_service.repository.BaseRepository;
 import com.iba.fertilizer_service.repository.ProductCaseRepository;
+import com.iba.fertilizer_service.service.AbstractService;
 import com.iba.fertilizer_service.service.ProductCaseService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.*;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @Service
-@RequiredArgsConstructor
-public class ProductCaseServiceImpl implements ProductCaseService {
+
+public class ProductCaseServiceImpl extends AbstractService<ProductCase, Long> implements ProductCaseService {
 
     private final ProductCaseRepository productCaseRepository;
+
+    public ProductCaseServiceImpl(ProductCaseRepository productCaseRepository) {
+        super(productCaseRepository);
+        this.productCaseRepository = productCaseRepository;
+    }
+
     @Override
     public Page<ProductCase> findAllForUser(Integer page, Integer size, Long currentUserId) {
         return productCaseRepository.findAll((root, criteriaQuery, criteriaBuilder)->criteriaBuilder.equal(root.get("userId"), currentUserId),PageRequest.of(page, size));
@@ -25,4 +36,11 @@ public class ProductCaseServiceImpl implements ProductCaseService {
         productCase.setUserId(currentUserId);
         return productCaseRepository.save(productCase);
     }
+
+    @Override
+    public Optional<ProductCase> getByIdAndUserId(Long caseId, Long currentUserId) {
+        return productCaseRepository.findByIdAndUserId(caseId, currentUserId);
+    }
+
+
 }

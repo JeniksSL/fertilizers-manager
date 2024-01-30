@@ -43,7 +43,13 @@ public class ProductCaseMapper extends AbstractDoubleMapper<ProductCase, Product
                 .getProductMap()
                 .entrySet()
                 .stream()
-                .map(entry->ProductCompactDto.builder().id(entry.getKey().getId()).rate(entry.getValue()).build()).toList());
+                .map(entry->ProductCompactDto
+                        .builder()
+                        .id(entry.getKey().getId())
+                        .rate(entry.getValue().getRate())
+                        .price(entry.getValue().getPrice())
+                        .build())
+                .toList());
     }
 
     @Override

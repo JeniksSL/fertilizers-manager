@@ -62,9 +62,10 @@ CREATE TABLE case_nutrients
 
 CREATE TABLE case_products
 (
-    case_id    BIGINT  NOT NULL,
-    rate       DECIMAL NOT NULL,
-    product_id BIGINT  NOT NULL,
+    case_id    BIGINT NOT NULL,
+    price      DECIMAL,
+    rate       DECIMAL,
+    product_id BIGINT NOT NULL,
     CONSTRAINT pk_case_products PRIMARY KEY (case_id, product_id)
 );
 

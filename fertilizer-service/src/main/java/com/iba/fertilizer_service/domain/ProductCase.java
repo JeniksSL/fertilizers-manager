@@ -47,5 +47,5 @@ public class ProductCase implements BaseEntity<Long> {
     @CollectionTable(name = "case_products", joinColumns = @JoinColumn(name = "case_id", referencedColumnName = "id"))
     @MapKeyJoinColumn(name = "product_id", referencedColumnName = "id")
     @Column(table ="case_products", name = "rate", nullable = false)
-    private Map<Product, BigDecimal> productMap;
+    private Map<Product, ProductPriceRate> productMap;
 }

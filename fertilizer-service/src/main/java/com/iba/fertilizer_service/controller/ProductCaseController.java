@@ -35,4 +35,10 @@ public class ProductCaseController {
         return productCaseFacade.create(productCaseDto);
     }
 
+
+    @DeleteMapping("/{id}")
+    void delete(@PathVariable("id") Long caseId) {
+        productCaseFacade.deleteById(caseId);
+    }
+
 }
