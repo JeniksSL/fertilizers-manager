@@ -21,9 +21,10 @@ public class RequestResolver {
 
 
 
-    public CalculationResponseDto getResolveCases(CalculationRequestDto calculationRequestDto) {
+    public CalculationResponseDto getResolveCases(CalculationRequestDto calculationRequestDto, Integer length) {
         CalculationResponseDto calculationResponseDto = CalculationResponseDto
                 .builder()
+                .unitsType(calculationRequestDto.unitsType())
                 .cases( new ArrayList<>())
                 .build();
         TreeMap<Long, LogicProduct> productTreeMap=new TreeMap<>();
@@ -71,23 +72,29 @@ public class RequestResolver {
                .sum();
     }
 
-    private void recursiveResolution(LogicCase startCase, TreeMap<Long, Short> substanceWeights, CalculationRequestDto calculationRequestDto, CalculationResponseDto calculationResponseDto) {
-
+    private void recursiveResolution(LogicCase allCases, TreeMap<Long, Short> substanceWeights, CalculationRequestDto calculationRequestDto, CalculationResponseDto calculationResponseDto) {
         if (isComplete(calculationResponseDto)) return;
-        if (isCanBeSolved(startCase, substanceWeights)) {
+        if (isCanBeSolved(allCases, substanceWeights)) {
             TreeSet<LogicCase> cases = new TreeSet<>();
-            NativeFinder.nativeSolve(startCase, substanceWeights, true);
-            if (!isValid(startCase, substanceWeights)) {
-                NativeFinder.nativeSolve(startCase, substanceWeights, false);
+            NativeFinder.nativeSolve(allCases, substanceWeights, true);
+            if (!isValid(allCases, substanceWeights)) {
+                NativeFinder.nativeSolve(allCases, substanceWeights, false);
             }
-            cleanCase(startCase);
-            if (isValid(startCase, substanceWeights)) {
-                if (!checkIfExists(calculationResponseDto, startCase)&isCleanCase(startCase)) addCaseToResponse(startCase ,calculationRequestDto, calculationResponseDto);
-                cases.addAll(getNextCases(startCase));
+            cleanCase(allCases);
+            if (isValid(allCases, substanceWeights)) {
+                if (!checkIfExists(calculationResponseDto, allCases)&isCleanCase(allCases)) addCaseToResponse(allCases ,calculationRequestDto, calculationResponseDto);
+                cases.addAll(getNextCases(allCases));
             }
             cases.forEach(logicCase -> recursiveResolution(logicCase, substanceWeights, calculationRequestDto,calculationResponseDto));
         }
     }
+    private void recursiveQueuedResolution(List<LogicCase> allCases, TreeMap<Long, Short> substanceWeights, CalculationRequestDto calculationRequestDto, CalculationResponseDto calculationResponseDto) {
+
+
+    }
+
+
+
 
     private void cleanCase(LogicCase startCase) {
         startCase.getProductMap().values().stream().filter(it->it.getRate()<minRate).forEach(it->it.setRate(0));
@@ -103,11 +110,25 @@ public class RequestResolver {
                     Optional.ofNullable(logicCase.getProductMap().get(pcd.getId())).map(LogicProduct::getRate)
                             .filter(value->value>0)
                             .map(BigDecimal::valueOf)
-                            .map(value->new ProductCompactDto(pcd.getId(), pcd.getPrice(), value, pcd.getSubstanceSet().stream().map(it->new SubstanceCompact(it.getId(), it.getContent().multiply(value))).collect(Collectors.toSet())))
+                            .map(
+                                    value->new ProductCompactDto(
+                                            pcd.getId(),
+                                            pcd.getPrice(),
+                                            value,
+                                            pcd.getSubstanceSet().stream().map(it->new SubstanceCompact(it.getId(), it.getContent().multiply(value))).collect(Collectors.toSet()))
+                            )
                             .orElse(null)
                 ).filter(Objects::nonNull)
                 .toList();
-        BigDecimal totalPrice = productCompactDtos.stream().map(pcd->pcd.getPrice().multiply(pcd.getRate()).divide(new BigDecimal(1000), RoundingMode.CEILING)).reduce(BigDecimal::add).orElse(BigDecimal.ZERO);
+        BigDecimal totalPrice = productCompactDtos
+                .stream()
+                .map(pcd->pcd
+                        .getPrice()
+                        .multiply(pcd.getRate())
+                        .divide(BigDecimal.valueOf(calculationRequestDto.unitsType().unitsProductWeight().getCoefficient()), RoundingMode.CEILING)
+                )
+                .reduce(BigDecimal::add)
+                .orElse(BigDecimal.ZERO);
         CalculationCaseDto calculationCaseDto = CalculationCaseDto
                 .builder()
                 .totalPrice(totalPrice)
@@ -119,7 +140,8 @@ public class RequestResolver {
     }
 
     private boolean isComplete(CalculationResponseDto calculationResponseDto) {
-        return maxLength<=Optional.ofNullable(calculationResponseDto.getCases()).map(Collection::size).orElse(0);
+        int current = Optional.ofNullable(calculationResponseDto.getCases()).map(Collection::size).orElse(0);
+        return maxLength<=current;
     }
 
     private boolean isCleanCase(LogicCase startCase) {

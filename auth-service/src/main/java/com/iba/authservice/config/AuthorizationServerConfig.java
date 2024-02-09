@@ -124,7 +124,7 @@ public class AuthorizationServerConfig {
                 .clientSettings(ClientSettings.builder().requireAuthorizationConsent(false).build())
                 .tokenSettings(TokenSettings.builder()
                         .accessTokenFormat(OAuth2TokenFormat.SELF_CONTAINED)
-                        .accessTokenTimeToLive(Duration.of(120, ChronoUnit.MINUTES))
+                        .accessTokenTimeToLive(Duration.of(20, ChronoUnit.MINUTES))
                         .refreshTokenTimeToLive(Duration.of(120, ChronoUnit.MINUTES))
                         .reuseRefreshTokens(false)
                         .authorizationCodeTimeToLive(Duration.of(30, ChronoUnit.SECONDS))

@@ -24,8 +24,12 @@ spring:
             scope: openid,clients,profile
         provider:
           feign:
-            #token-uri: http://localhost:9000/oauth2/access-token
-            issuer-uri: http://localhost:9000
+            token-uri: http://localhost:9000/oauth2/token
+            authorization-uri: http://localhost:9000/oauth2/authorize
+            user-info-uri: http://localhost:9000/userinfo
+            user-name-attribute: sub
+            jwk-set-uri: http://localhost:9000/oauth2/jwks
+            #issuer-uri: http://localhost:9000
   cloud:
     openfeign:
       oauth2:

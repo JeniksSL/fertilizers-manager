@@ -17,9 +17,9 @@ public class CalcFacadeImpl implements CalcFacade {
 
 
     @Override
-    public CalculationResponseDto calculate(CalculationRequestDto calculationRequestDto) {
-
-        return requestResolver.getResolveCases(calculationRequestDto);
+    public CalculationResponseDto calculate(CalculationRequestDto calculationRequestDto, Integer length) {
+        length=length!=null?length:1;
+        return requestResolver.getResolveCases(calculationRequestDto, length);
 
     }
 

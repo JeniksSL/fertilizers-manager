@@ -11,6 +11,6 @@ import java.util.List;
 @Builder
 public class CalculationResponseDto {
     private Long id;
-    private String priceType;
+    private UnitsType unitsType;
     private List<CalculationCaseDto> cases;
 }

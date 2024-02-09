@@ -30,6 +30,7 @@ public class ProductController {
                                          ProductCriteriaDTO criteria) {
         return productFacade.getAllByCriteria(criteria, page, size);
     }
+
     @PostMapping("/resolve")
     CalculationResponseDto resolveCase(@RequestBody CalculationRequestDto calculationRequest){
         return productFacade.resolveCase(calculationRequest);

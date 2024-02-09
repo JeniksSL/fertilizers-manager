@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.*;
 
 
 @RestController
-@RequestMapping("/calculations")
+@RequestMapping("calc")
 @RequiredArgsConstructor
 public class CalcController {
 
@@ -20,10 +20,10 @@ public class CalcController {
 
 
 
-    @PostMapping
-    CalculationResponseDto calculate(@RequestBody CalculationRequestDto calculationRequestDto) {
+    @PostMapping("/calculations/{length}")
+    CalculationResponseDto calculate(@PathVariable(required = false) Integer length, @RequestBody CalculationRequestDto calculationRequestDto) {
 
-        return calcFacade.calculate(calculationRequestDto);
+        return calcFacade.calculate(calculationRequestDto, length);
     }
 
 }

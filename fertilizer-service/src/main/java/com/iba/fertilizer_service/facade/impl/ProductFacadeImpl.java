@@ -66,7 +66,7 @@ public class ProductFacadeImpl implements ProductFacade {
     @Override
     public CalculationResponseDto resolveCase(CalculationRequestDto calculationRequest) {
         validateAndSupplementRequest(calculationRequest);
-        return calcClient.getProductsComposition(calculationRequest);
+        return calcClient.getProductsComposition(1, calculationRequest);
     }
 
     @Transactional

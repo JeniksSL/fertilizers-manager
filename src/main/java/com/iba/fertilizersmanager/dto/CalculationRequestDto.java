@@ -7,4 +7,4 @@ import java.util.List;
 
 @Builder
 public record CalculationRequestDto (
-        String priceType, List<SubstanceCompact> substances, List<ProductCompactDto> products){}
+        UnitsType unitsType, List<SubstanceCompact> substances, List<ProductCompactDto> products){}

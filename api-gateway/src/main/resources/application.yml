@@ -42,6 +42,10 @@ spring:
           uri: http://localhost:8081
           predicates:
             - Path=/file-server/**
+        - id: calc
+          uri: http://localhost:8070
+          predicates:
+              - Path=/calc/**
          # filters:
               #- TokenRelay=
              # - RemoveRequestHeader=Cookie

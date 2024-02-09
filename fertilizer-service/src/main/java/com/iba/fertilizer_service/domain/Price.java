@@ -11,7 +11,7 @@ import java.math.BigDecimal;
 @Getter
 @Setter
 @Entity
-@Table(name = "product_prices", uniqueConstraints = {@UniqueConstraint(name = "user_id_product_id_unique", columnNames = {"user_id", "product_id"})})
+@Table(name = "product_prices", uniqueConstraints = {@UniqueConstraint(name = "user_id_product_id_type_unique", columnNames = {"user_id", "product_id", "type"})})
 
 public class Price {
 
@@ -31,5 +31,9 @@ public class Price {
     @Basic
     @Column(name = "value", nullable = false)
     private BigDecimal value;
+
+    @Basic
+    @Column(name = "type", nullable = false)
+    private String type;
 
 }
