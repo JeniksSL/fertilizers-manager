@@ -11,4 +11,6 @@ public interface ProductCaseFacade {
 
     void deleteById(Long caseId);
 
+    ProductCaseDto update(ProductCaseDto productCaseDto);
+
 }

@@ -34,6 +34,12 @@ public class ProductCaseController {
         ControllerUtil.checkBindingResult(bindingResult);
         return productCaseFacade.create(productCaseDto);
     }
+    @PutMapping
+    ProductCaseDto update(@Valid @RequestBody ProductCaseDto productCaseDto,
+                          final BindingResult bindingResult) {
+        ControllerUtil.checkBindingResult(bindingResult);
+        return productCaseFacade.update(productCaseDto);
+    }
 
 
     @DeleteMapping("/{id}")

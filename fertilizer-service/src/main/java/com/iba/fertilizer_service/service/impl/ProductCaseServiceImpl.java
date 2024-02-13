@@ -42,5 +42,18 @@ public class ProductCaseServiceImpl extends AbstractService<ProductCase, Long> i
         return productCaseRepository.findByIdAndUserId(caseId, currentUserId);
     }
 
+    @Override
+    public ProductCase updateForUser(ProductCase productCase, Long currentUserId) {
+        ProductCase original = productCaseRepository.findByIdAndUserId(productCase.getId(), currentUserId).orElseThrow();
+        updateProductCase(original, productCase);
+        return productCaseRepository.save(original);
+    }
+
+    private void updateProductCase(ProductCase original, ProductCase productCase) {
+        original.setCropName(productCase.getCropName());
+        original.setFieldName(productCase.getFieldName());
+        original.setArea(productCase.getArea());
+    }
+
 
 }

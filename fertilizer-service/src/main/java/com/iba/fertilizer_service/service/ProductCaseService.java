@@ -14,4 +14,6 @@ public interface ProductCaseService {
     void deleteById(Long caseId);
 
     Optional<ProductCase> getByIdAndUserId(Long caseId, Long currentUserId);
+
+    ProductCase updateForUser(ProductCase productCase, Long currentUserId);
 }

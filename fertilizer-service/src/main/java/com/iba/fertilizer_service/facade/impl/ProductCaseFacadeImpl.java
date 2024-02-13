@@ -59,4 +59,10 @@ public class ProductCaseFacadeImpl implements ProductCaseFacade {
         productCaseService.getByIdAndUserId(caseId, userService.getCurrentUserId()).orElseThrow();
         productCaseService.deleteById(caseId);
     }
+
+    @Override
+    public ProductCaseDto update(ProductCaseDto productCaseDto) {
+        ProductCase productCase = doubleMapper.toEntity(productCaseDto);
+        return doubleMapper.toDto(productCaseService.updateForUser(productCase, userService.getCurrentUserId()));
+    }
 }

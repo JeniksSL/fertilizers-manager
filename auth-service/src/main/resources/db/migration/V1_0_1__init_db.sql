@@ -1,4 +1,5 @@
 begin;
+
 create table if not exists flyway_schema_history
 (
     installed_rank integer                 not null

@@ -1,8 +1,7 @@
 package com.iba.fertilizer_service.dto;
 
 
-import com.iba.fertilizersmanager.dto.ProductCompactDto;
-import com.iba.fertilizersmanager.dto.SubstanceCompact;
+import com.iba.fertilizersmanager.dto.*;
 import com.iba.fertilizersmanager.dto.core.BaseDto;
 import lombok.*;
 
@@ -22,6 +21,8 @@ public class ProductCaseDto extends BaseDto {
     private String fieldName;
 
     private BigDecimal area;
+
+    private UnitsType unitsType;
 
     private List<SubstanceCompact> substances;
 
