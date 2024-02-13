@@ -12,6 +12,7 @@ import org.springframework.boot.ApplicationRunner;
 import org.springframework.stereotype.Component;
 
 import java.math.BigDecimal;
+import java.util.List;
 import java.util.Map;
 
 @Component
@@ -58,7 +59,7 @@ public class DataLoader implements ApplicationRunner {
                         .build()
                 ));
         if (productService.getByIdAndUserIdOrCommon(1L, 1L).isPresent()) return;
-        productService.createForUser(Product
+       productService.createForUser(Product
                 .builder()
                         .name("MAP 12-52")
                         .fullName("Monoammonium Phosphate")

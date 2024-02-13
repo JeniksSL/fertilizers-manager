@@ -4,6 +4,9 @@ logging:
   level:
     org.springframework.security: trace
 spring:
+  h2:
+    console:
+      enabled: true
   flyway:
     locations: classpath:db/migration
   application:
@@ -36,13 +39,14 @@ spring:
         enabled: true
         clientRegistrationId: feign
   datasource:
-    driver-class-name: org.postgresql.Driver
-    url: jdbc:postgresql://${DB_HOST}:${DB_PORT}/f_s
-    username: ${DB_USER}
-    password: ${DB_PASS}
+    url: jdbc:h2:mem:fertilizers
+    driverClassName: org.h2.Driver
+    username: sa
+    password: password
   jpa:
+    database-platform: org.hibernate.dialect.H2Dialect
     hibernate:
-      connection:
-        provider_class: com.zaxxer.hikari.hibernate.HikariConnectionProvider
+        connection:
+          provider_class: com.zaxxer.hikari.hibernate.HikariConnectionProvider
 front:
   url: http://localhost:3000

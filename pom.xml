@@ -26,6 +26,7 @@
         <spring-cloud.version>2023.0.0</spring-cloud.version>
         <model-mapper.version>3.2.0</model-mapper.version>
         <db.postgre.version>42.6.0</db.postgre.version>
+        <db.h2.version>2.1.214</db.h2.version>
         <maven.compiler.source>17</maven.compiler.source>
         <maven.compiler.target>17</maven.compiler.target>
     </properties>
@@ -78,6 +79,11 @@
                 <groupId>org.postgresql</groupId>
                 <artifactId>postgresql</artifactId>
                 <version>${db.postgre.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.h2database</groupId>
+                <artifactId>h2</artifactId>
+                <version>${db.h2.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>

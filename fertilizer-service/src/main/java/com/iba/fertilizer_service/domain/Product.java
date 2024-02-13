@@ -50,7 +50,7 @@ public class Product implements BaseEntity<Long> {
     @ElementCollection(fetch = FetchType.EAGER)
     @CollectionTable(name = "compositions", joinColumns = @JoinColumn(name = "product_id", referencedColumnName = "id"))
     @MapKeyJoinColumn(name = "substance_id", referencedColumnName = "id")
-    @Column(table ="compositions", name = "content", nullable = false)
+    @Column(table ="compositions", name = "content", nullable = false, scale = 15, precision = 30)
     private Map<Substance, BigDecimal> substanceMap;
 
 
